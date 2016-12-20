@@ -1,4 +1,11 @@
 #! /bin/bash
+
+# Usage:
+#   ./installArch.sh /dev/sda1 myHostName
+#
+#   /dev/sda1: The mountpoint that should be mounted to /mnt
+#   myHostName: What you want the hostname for the machine to be.
+#
 if [ -z "$1" ]
 then
     echo "No mount point specified"
