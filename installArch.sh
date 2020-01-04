@@ -93,7 +93,7 @@ case $installX in
         ;;
 esac
 
-achroot "pacman -S --noconfirm xorg-server xorg-xinit xorg-setxkbmap awesome rxvt-unicode chromium"
+achroot "pacman -S --noconfirm xorg-server xorg-xinit xorg-setxkbmap awesome rxvt-unicode git"
 
 achroot "lspci | grep -e VGA -e 3D"
 read -r -p 'Install [i]ntel, [a]md, or [n]videa driver?' driver
@@ -121,3 +121,19 @@ Option      "XkbLayout" "se"
 Option      "XkbOptions" "compose:menu"
 EndSection
 EOL
+
+read -r -p 'Install docker and pull down images?' installDocker
+case $installDocker in
+    [nN])
+        exit 0
+        ;;
+esac
+
+achroot "pacman -S --noconfirm docker"
+mkdir -p /mnt/home/${username}/code/github
+mkdir -p /mnt/home/${username}/bin
+cd /mnt/home/${username}/code/github \
+  && git clone https://github.com/qwelyt/docker-stuff.git \
+  && cd docker-stuff/chromium \
+  && docker build -t chromium .
+  && cd /mnt/home/${username}/bin && ln -s chromium /mnt/home/${username}/code/github/chromium/chromium
