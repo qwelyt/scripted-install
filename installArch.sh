@@ -130,10 +130,11 @@ case $installDocker in
 esac
 
 achroot "pacman -S --noconfirm docker"
-mkdir -p /mnt/home/${username}/code/github
-mkdir -p /mnt/home/${username}/bin
-cd /mnt/home/${username}/code/github \
+achroot "mkdir -p /home/${username}/code/github"
+achroot "mkdir -p /home/${username}/bin"
+achroot "cd /home/${username}/code/github \
   && git clone https://github.com/qwelyt/docker-stuff.git \
   && cd docker-stuff/chromium \
   && docker build -t chromium .
-  && cd /mnt/home/${username}/bin && ln -s chromium /mnt/home/${username}/code/github/chromium/chromium
+  && cd /home/${username}/bin && ln -s chromium /home/${username}/code/github/chromium/chromium"
+
